@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Accounting</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+       
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        
+        .payment-method-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-method-container label {
+            font-weight: normal;
+        }
+
+        
+        input[type="submit"] {
+            background-color: #a74caf;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4583a0;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Product Inventory</a></li>
+                <li><a href="payment.html">Payment & Accounting</a></li>
+                <li><a href="logistics.html">Logistics</a></li>
+                <li><a href="customer_service.html">Customer Service</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h1>Payment & Accounting</h1>
+        <form id="payment-form" action="/submit_payment" method="post">
+            <div class="form-group">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Delivery Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" required>
+            </div>
+            <div class="form-group">
+                <label for="product">Product:</label>
+                <select id="product" name="product" onchange="updatePrice()" required>
+                    <option value="">Select Product</option>
+                    <option value="Processor:Intel Core i9-12900K:$544.99">Processor - Intel Core i9-12900K - $544.99</option>
+                    <option value="Video Card:PowerColor Hellhound Radeon RX 7800 XT:$529.99">Video Card - PowerColor Hellhound Radeon RX 7800 XT - $529.99</option>
+                    <option value="Mother Board">GIGABYTE B650 AORUS ELITE AX V2 AM5 LGA 1718 AMD B650 ATX Motherboard with 5-Year Warranty, DDR5, Triple M.2, PCIe 5.0, USB 3.2 Gen2X2 Type-C, WiFi 6E, 2.5GbE LAN, Q-Flash Plus, EZ-Latch</option>
+                    <option value="PC Case">LIAN LI LANCOOL 216RX Black Steel / Tempered Glass ATX Mid Tower Computer Case ,2x 16 cm ARGB Fans Included ----LANCOOL 216RX</option>
+                    <option value="RAM">G.SKILL Ripjaws S5 Series 32GB (2 x 16GB) 288-Pin PC RAM DDR5 6000 (PC5 48000) Desktop Memory Model F5-6000J3636F16GX2-RS5K</option>
+                    <option value="Keyboard">Corsair K65 RGB Mini 60% Mechanical Gaming Keyboard - Cherry MX Brown Mechanical Keyswitches - Customizable Per-Key RGB Backlighting</option>
+                    <option value="PSU">MSI- MEG Ai1000P PCIE 5.0, 80 PLATINUM Full Modular Gaming PSU, 12VHPWR Cable, 4080 4090 ATX 3.0 Compatible, 1000W Power Supply</option>
+                    <option value="Liquid Cooler">MSI MEG Core Liquid S360 AIO Liquid CPU Cooler, 2.4" IPS Display 360mm Radiator, Triple 120mm Silent Gale P12 PWM Fans</option>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" onchange="updatePrice()" required>
+            </div>
+            <div class="payment-method-container">
+                <label for="payment-method">Select Payment Method:</label>
+                <select id="payment-method" name="payment-method">
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+            <input type="hidden" id="total-price" name="total-price">
+            <input type="button" value="Proceed" onclick="redirectToLogistics()">
+        </form>
+    </div>
+
+    <script>
+        function redirectToLogistics() {
+            window.location.href = "logistics.html";
+        }
+    </script>
+</body>
+</html>
